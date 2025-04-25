@@ -1,16 +1,15 @@
 package org.example.service;
 
 import org.example.dto.PlaceDto;
+import org.example.dto.PlaceMarker;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,14 @@ public class GoogleMapService {
 
     private final String apiKey = "AIzaSyCtyCHoLK5orbeDrsODnVTuWqwad0be3eQ";
 
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    private final String BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
+
+    private final List<String> FOOD_TYPES = List.of("restaurant", "cafe", "bar", "bakery");
+
+    private final String KIEV_LOCATION = "50.4501,30.5234";
+    private final int RADIUS = 3000;
 
     public PlaceDto getPlaceDetailsFromGoogleMaps(String id) {
         RestTemplate restTemplate = new RestTemplate();
@@ -132,4 +139,40 @@ public class GoogleMapService {
                 .queryParam("key", apiKey)
                 .toUriString();
     }
+
+    public List<PlaceMarker> getAllPlaces() {
+        List<PlaceMarker> allMarkers = new ArrayList<>();
+
+        for (String type : FOOD_TYPES) {
+            String url = String.format("%s?location=%s&radius=%d&type=%s&key=%s",
+                    BASE_URL, KIEV_LOCATION, RADIUS, type, apiKey);
+
+            ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
+
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                List<Map<String, Object>> results = (List<Map<String, Object>>) response.getBody().get("results");
+
+                for (Map<String, Object> result : results) {
+                    Map<String, Object> geometry = (Map<String, Object>) result.get("geometry");
+                    Map<String, Object> location = (Map<String, Object>) geometry.get("location");
+
+                    String placeId = (String) result.get("place_id");
+                    double lat = ((Number) location.get("lat")).doubleValue();
+                    double lng = ((Number) location.get("lng")).doubleValue();
+
+                    PlaceMarker marker = new PlaceMarker();
+                    marker.setPlaceId(placeId);
+                    marker.setType(type);
+                    marker.setLat(lat);
+                    marker.setLng(lng);
+
+                    allMarkers.add(marker);
+                }
+            }
+        }
+
+        return allMarkers;
+    }
+
+
 }
