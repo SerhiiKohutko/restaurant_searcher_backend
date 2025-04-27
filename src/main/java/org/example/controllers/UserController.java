@@ -1,31 +1,35 @@
 package org.example.controllers;
 
+import org.example.response.AddFavouritePlaceResponse;
+import org.example.response.DeletePlaceResponse;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.login.CredentialException;
+import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam(name = "username") String username, @RequestParam("password") String password) throws CredentialException {
-        return ResponseEntity.ok(userService.authenticate(username, password));
+    @PatchMapping("/add_favourite_place")
+    public ResponseEntity<AddFavouritePlaceResponse> addFavouritePlaceToUserList(@RequestParam("place_id") String placeId){
+        return new ResponseEntity<>(userService.addFavouritePlaceById(placeId), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestParam(name = "username") String username, @RequestParam("password") String password) throws CredentialException {
-        userService.registerUser(username, password);
-        return ResponseEntity.ok("User successfully registered!");
+    @GetMapping("/favourite_places")
+    public ResponseEntity<List<String>> getUserFavouritePlaces(){
+        return ResponseEntity.ok(userService.getFavouritePlaces());
     }
+
+    @DeleteMapping("/delete_place")
+    public ResponseEntity<DeletePlaceResponse> deletePlaceFromUserList(@RequestParam("place_id") String placeId){
+        return new ResponseEntity<>(userService.deletePlaceById(placeId), HttpStatus.ACCEPTED);
+    }
+
 }

@@ -3,6 +3,9 @@ package org.example.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @Table
@@ -14,4 +17,9 @@ public class User {
 
     private String username;
     private String password;
+
+    @ElementCollection
+    @CollectionTable(name = "favourite_places", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "places", nullable = false)
+    private List<String> favouritePlaces = new ArrayList<>();
 }
