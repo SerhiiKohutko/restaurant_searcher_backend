@@ -6,7 +6,6 @@ import org.example.exceptions.InvalidPlaceIdException;
 import org.example.exceptions.NoUserFoundException;
 import org.example.exceptions.UsernameAlreadyInUseException;
 import org.example.jwt.JwtProvider;
-import org.example.response.AddFavouritePlaceResponse;
 import org.example.response.DeletePlaceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -66,16 +65,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public AddFavouritePlaceResponse addFavouritePlaceById(String placeId) {
+    public User addFavouritePlaceById(String placeId) {
 
         //throws exception if place details null
         isPlaceIdValid(placeId);
 
         User obtainedUser = getUserFromSecurityContext();
         obtainedUser.getFavouritePlaces().add(placeId);
-        userRepository.save(obtainedUser);
 
-        return new AddFavouritePlaceResponse();
+        return userRepository.save(obtainedUser);
     }
 
     private void isPlaceIdValid(String placeId){

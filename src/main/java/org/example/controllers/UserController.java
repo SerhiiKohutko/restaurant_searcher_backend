@@ -19,7 +19,8 @@ public class UserController {
 
     @PatchMapping("/add_favourite_place")
     public ResponseEntity<AddFavouritePlaceResponse> addFavouritePlaceToUserList(@RequestParam("place_id") String placeId){
-        return new ResponseEntity<>(userService.addFavouritePlaceById(placeId), HttpStatus.ACCEPTED);
+        userService.addFavouritePlaceById(placeId);
+        return new ResponseEntity<>(new AddFavouritePlaceResponse(), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/favourite_places")

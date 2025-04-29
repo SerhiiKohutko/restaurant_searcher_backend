@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.response.AddFavouritePlaceResponse;
+import org.example.entity.User;
 import org.example.response.DeletePlaceResponse;
 
 import javax.security.auth.login.CredentialException;
@@ -12,7 +12,7 @@ public interface UserService {
 
     List<String> getFavouritePlaces();
 
-    AddFavouritePlaceResponse addFavouritePlaceById(String placeId);
+    User addFavouritePlaceById(String placeId);
 
     DeletePlaceResponse deletePlaceById(String placeId);
 }
