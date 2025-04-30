@@ -3,7 +3,7 @@ package org.example.service;
 import org.example.entity.User;
 import org.example.exceptions.NoUserFoundException;
 import org.example.exceptions.UsernameAlreadyInUseException;
-import org.example.google_maps.GoogleMapsApplication;
+import org.example.GoogleMapsApplication;
 import org.example.jwt.JwtProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
