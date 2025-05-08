@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.dto.PlaceDto;
 import org.example.dto.PlaceMarker;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,8 @@ public class GoogleMapService {
     private static final String GOOGLE_MAPS_URL = "https://maps.googleapis.com/maps/api/place/details/json";
     private static final String GOOGLE_MAPS_PHOTO_URL = "https://maps.googleapis.com/maps/api/place/photo";
 
-    private final String apiKey = "AIzaSyCtyCHoLK5orbeDrsODnVTuWqwad0be3eQ";
+    @Value("${google-maps.api.secret-key}")
+    private String apiKey;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
