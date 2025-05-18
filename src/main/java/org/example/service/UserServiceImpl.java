@@ -1,8 +1,6 @@
 package org.example.service;
 
-import org.example.dto.PlaceDto;
 import org.example.entity.User;
-import org.example.exceptions.InvalidPlaceIdException;
 import org.example.exceptions.NoUserFoundException;
 import org.example.exceptions.UsernameAlreadyInUseException;
 import org.example.jwt.JwtProvider;
@@ -27,6 +25,8 @@ public class UserServiceImpl implements UserService{
     private JwtProvider jwtProvider;
     @Autowired
     private GoogleMapService googleMapService;
+    @Autowired
+    private PlacesService placesService;
 
     @Override
     public void registerUser(String username, String password) {
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService{
     public User addFavouritePlaceById(String placeId) {
 
         //throws exception if place details null
-        isPlaceIdValid(placeId);
+        placesService.isPlaceIdValid(placeId);
 
         User obtainedUser = getUserFromSecurityContext();
         obtainedUser.getFavouritePlaces().add(placeId);
@@ -76,16 +76,9 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(obtainedUser);
     }
 
-    private void isPlaceIdValid(String placeId){
-        PlaceDto placeDto = googleMapService.getPlaceDetailsFromGoogleMaps(placeId);
-        if (placeDto.getAddress() == null || placeDto.getName() == null){
-            throw new InvalidPlaceIdException(placeId);
-        }
-    }
-
     @Override
     public DeletePlaceResponse deletePlaceById(String placeId) {
-        isPlaceIdValid(placeId);
+        placesService.isPlaceIdValid(placeId);
 
         User obtainedUser = getUserFromSecurityContext();
         obtainedUser.getFavouritePlaces().remove(placeId);

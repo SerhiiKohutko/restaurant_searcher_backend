@@ -10,4 +10,6 @@ public interface PlacesService {
     PlaceDto getPlaceDetailsById(String placeId);
 
     List<PlaceMarker> getAllPlaces();
+
+    void isPlaceIdValid(String placeId);
 }

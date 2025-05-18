@@ -18,6 +18,10 @@ public class User {
     private String username;
     private String password;
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
+
     @ElementCollection
     @CollectionTable(name = "favourite_places", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "places", nullable = false)
