@@ -13,11 +13,11 @@ A Spring Boot-based backend service for discovering restaurants, bars, bakeries 
 
 ## Tech Stack
 
-- **Framework**: Spring Boot 3.x
+- **Framework**: Spring Boot
 - **Security**: Spring Security with JWT
-- **Database**: MySQL 8.0+
+- **Database**: MySQL 8.0
 - **ORM**: Spring Data JPA / Hibernate
 - **API Integration**: Google Maps API
 - **Testing**: JUnit 5, Mockito
-- **Build Tool**: Maven/Gradle
+- **Build Tool**: Maven
 - **Documentation**: Lombok for boilerplate reduction
