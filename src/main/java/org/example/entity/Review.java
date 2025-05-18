@@ -16,7 +16,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @JsonFormat(pattern = "yyyy/DD/mm")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateCreated;
 
     private String message;

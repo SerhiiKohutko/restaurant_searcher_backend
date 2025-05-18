@@ -3,7 +3,9 @@ package org.example.service;
 import org.example.entity.Place;
 import org.example.entity.Review;
 import org.example.entity.User;
+import org.example.exceptions.NoReviewFoundException;
 import org.example.request.ReviewCreationRequest;
+import org.example.request.ReviewUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +59,26 @@ public class ReviewServiceImpl implements ReviewService{
         review.setPlace(place);
 
         return reviewRepository.save(review);
+    }
+
+    @Override
+    public void deleteReviewById(Long reviewId) {
+        reviewRepository.deleteById(reviewId);
+    }
+
+    @Override
+    public Review updateReview(ReviewUpdateRequest request) {
+        Optional<Review> reviewOptional = reviewRepository.findById(request.getReviewId());
+
+        if (reviewOptional.isEmpty()){
+            throw new NoReviewFoundException(request.getReviewId().toString());
+        }
+
+        Review reviewToUpdate = reviewOptional.get();
+        reviewToUpdate.setMessage(request.getMessage());
+        reviewToUpdate.setRating(request.getRating());
+        reviewToUpdate.setDateCreated(new Date());
+
+        return reviewRepository.save(reviewToUpdate);
     }
 }

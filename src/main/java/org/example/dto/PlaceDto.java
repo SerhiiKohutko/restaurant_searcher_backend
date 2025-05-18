@@ -3,7 +3,9 @@ package org.example.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.entity.Review;
 
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -19,4 +21,5 @@ public class PlaceDto {
     private String phone;
     private String website;
     private String image_url;
+    private List<Review> reviews;
 }
