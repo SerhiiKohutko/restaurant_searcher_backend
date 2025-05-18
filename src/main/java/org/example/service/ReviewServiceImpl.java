@@ -52,6 +52,7 @@ public class ReviewServiceImpl implements ReviewService{
 
         Place place = new Place();
         place.setPlaceId(request.getPlaceId());
+        placesService.createPlace(place);
 
         review.setPlace(place);
 

@@ -15,6 +15,8 @@ public class PlacesServiceImpl implements PlacesService{
 
     @Autowired
     private GoogleMapService googleMapService;
+    @Autowired
+    private PlaceRepository placeRepository;
 
     @Override
     public PlaceDto getPlaceDetailsById(String placeId) {
@@ -32,6 +34,11 @@ public class PlacesServiceImpl implements PlacesService{
         if (placeDto.getAddress() == null || placeDto.getName() == null){
             throw new InvalidPlaceIdException(placeId);
         }
+    }
+
+    @Override
+    public Place createPlace(Place place) {
+        return placeRepository.save(place);
     }
 
     @Override

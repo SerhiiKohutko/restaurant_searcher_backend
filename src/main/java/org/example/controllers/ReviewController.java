@@ -24,6 +24,6 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<Review> createReview(@RequestBody ReviewCreationRequest request){
-        return null;
+        return ResponseEntity.ok(reviewService.createReview(request));
     }
 }

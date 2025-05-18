@@ -15,5 +15,7 @@ public interface PlacesService {
 
     void isPlaceIdValid(String placeId);
 
+    Place createPlace(Place place);
+
     Optional<Place> getPlaceById(String placeId);
 }
