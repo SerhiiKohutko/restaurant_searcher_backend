@@ -2,11 +2,13 @@ package org.example.service;
 
 import org.example.dto.PlaceDto;
 import org.example.dto.PlaceMarker;
+import org.example.entity.Place;
 import org.example.exceptions.InvalidPlaceIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlacesServiceImpl implements PlacesService{
@@ -30,5 +32,10 @@ public class PlacesServiceImpl implements PlacesService{
         if (placeDto.getAddress() == null || placeDto.getName() == null){
             throw new InvalidPlaceIdException(placeId);
         }
+    }
+
+    @Override
+    public Optional<Place> getPlaceById(String placeId) {
+        return Optional.empty();
     }
 }

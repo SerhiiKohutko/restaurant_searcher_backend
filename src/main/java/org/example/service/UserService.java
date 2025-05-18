@@ -15,4 +15,6 @@ public interface UserService {
     User addFavouritePlaceById(String placeId);
 
     DeletePlaceResponse deletePlaceById(String placeId);
+
+    User getUserFromSecurityContext();
 }

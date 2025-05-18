@@ -1,14 +1,12 @@
 package org.example.controllers;
 
 import org.example.entity.Review;
+import org.example.request.ReviewCreationRequest;
 import org.example.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,10 @@ public class ReviewController {
     @GetMapping("/{placeId}")
     public ResponseEntity<List<Review>> getPlaceReviews(@PathVariable String placeId){
         return new ResponseEntity<>(reviewService.getReviewsByPlaceId(placeId), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Review> createReview(@RequestBody ReviewCreationRequest request){
+        return null;
     }
 }

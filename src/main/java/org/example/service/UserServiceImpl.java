@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService{
     }
 
 
-    private User getUserFromSecurityContext(){
+    public User getUserFromSecurityContext(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 

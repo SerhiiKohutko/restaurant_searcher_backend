@@ -1,12 +1,15 @@
 package org.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "reviews")
+@Data
 public class Review {
 
     @Id
@@ -26,5 +29,6 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "place_id", nullable = false)
+    @JsonIgnore
     private Place place;
 }
